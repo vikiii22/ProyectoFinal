@@ -3,10 +3,15 @@ package com.example.pachanga_joseasanchezlopez.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,6 +27,13 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private Button btCerrarSession;
     private FirebaseAuth auth;
+    private TextView tvCorreo, tvNombreUsuario;
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        MenuInflater inflater1 = getActivity().getMenuInflater();
+        inflater1.inflate(R.menu.inicio, menu);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,11 +42,16 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         btCerrarSession=binding.getRoot().findViewById(R.id.btCerrarSession);
+        tvCorreo=root.findViewById(R.id.tvCorreoUsuario);
+        tvNombreUsuario=root.findViewById(R.id.tvNombreUsuario);
         auth=FirebaseAuth.getInstance();
         btCerrarSession.setOnClickListener(e->{
             auth.signOut();
             startActivity(new Intent(getActivity(), MainActivity.class));
         });
+        tvCorreo.setText(auth.getCurrentUser().getEmail());
+        tvNombreUsuario.setText(auth.getCurrentUser().getDisplayName());
+
 
         /*final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/

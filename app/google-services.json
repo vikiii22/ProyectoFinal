@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "483366251025",
+    "project_id": "pachanga-joseasanchezlopez",
+    "storage_bucket": "pachanga-joseasanchezlopez.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483366251025:android:d439740a2d04efb7c75fb0",
+        "android_client_info": {
+          "package_name": "com.example.pachanga_joseasanchezlopez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "483366251025-elrdorpihb2m05k32jpmvqp9paauavr8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi6EXsgjzPgYT-22YrgP_BVi1eDSWhcaE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "483366251025-elrdorpihb2m05k32jpmvqp9paauavr8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

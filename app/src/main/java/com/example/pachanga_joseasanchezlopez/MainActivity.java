@@ -33,9 +33,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);*/
-        comprobarAutenticacion();
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        btLogin = findViewById(R.id.btAcceder);
+        btRegistrar = findViewById(R.id.btRegistrar);
+
+        /**
+         * En este botón solamente compruebo si existe un usario o no para que realice el registro
+         */
+        btRegistrar.setOnClickListener(v -> {
+            /*if (!etEmail.getText().toString().isEmpty() && !etPassword.getText().toString().isEmpty()) {
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                        etEmail.getText().toString(), etPassword.getText().toString());
+            }*/
+            comprobarAutenticacion();
+        });
+
+        /**
+         * Comprueba que existe y se logea
+         */
+        btLogin.setOnClickListener(v -> {
+            if (!etEmail.getText().toString().isEmpty() && !etPassword.getText().toString().isEmpty()) {
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(
+                        etEmail.getText().toString(), etPassword.getText().toString());
+                comprobarAutenticacion();
+            }
+        });
     }
 
     private final ActivityResultLauncher<Intent> loginLauncher=registerForActivityResult(
@@ -43,42 +66,28 @@ public class MainActivity extends AppCompatActivity {
             new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
                 @Override
                 public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
-                    onLoginResult(result);
+                    //onLoginResult(result);
                 }
             }
     );
 
-    private void onLoginResult(FirebaseAuthUIAuthenticationResult result) {
-        IdpResponse response=result.getIdpResponse();
-        if (result.getResultCode()==RESULT_OK){
-            startActivity(new Intent(this, InicioActivity.class));
-        }else{
-            String msg_error="";
-            if (response == null){
-                msg_error="Es necesario autenticarse";
-            }else if(response.getError().getErrorCode()== ErrorCodes.NO_NETWORK){
-                msg_error="No hay red disponible para autenticarse";
-            }else{
-                msg_error="Error desconocido al autenticarse";
-            }
-            Toast.makeText(this, msg_error, Toast.LENGTH_LONG).show();
-        }
-        finish();
-    }
 
-    public void createSingInIntent(){
-        Intent signIntent=AuthUI.getInstance().createSignInIntentBuilder()
+    public void createSingInIntent() {
+        Intent signIntent = AuthUI.getInstance().createSignInIntentBuilder()
                 .setIsSmartLockEnabled(false)
                 .build();
         loginLauncher.launch(signIntent);
     }
 
-    private void comprobarAutenticacion(){
-        FirebaseAuth auth=FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null){
-            finish();
-            startActivity(new Intent(this, InicioActivity.class));
-        }else{
+    private void comprobarAutenticacion() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            if (auth.getCurrentUser().getEmail().equals(etEmail.getText().toString())) {
+                finish();
+                startActivity(new Intent(this, InicioActivity.class));
+            }
+        } else {
+            Toast.makeText(this, "Usuario no Registrado", Toast.LENGTH_LONG).show();
             createSingInIntent();
         }
     }
