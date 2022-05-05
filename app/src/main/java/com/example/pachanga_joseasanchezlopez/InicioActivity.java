@@ -1,5 +1,6 @@
 package com.example.pachanga_joseasanchezlopez;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,8 +40,8 @@ public class InicioActivity extends AppCompatActivity {
         binding.appBarInicio.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                auth.signOut();
+                startActivity(new Intent(getBaseContext(), MainActivity.class));
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
@@ -61,22 +62,6 @@ public class InicioActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.inicio, menu);
         return true;
-    }
-
-    /**TODO
-     * Que funcione logout al pulsar en el boton del menú
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_settings:
-                Toast.makeText(this, "Hola", Toast.LENGTH_LONG).show();
-                auth.signOut();
-            default:
-                return true;
-        }
     }
 
     @Override

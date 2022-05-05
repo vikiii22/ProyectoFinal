@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private Button btCerrarSession;
     private FirebaseAuth auth;
     private TextView tvCorreo, tvNombreUsuario;
 
@@ -41,14 +40,10 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        btCerrarSession=binding.getRoot().findViewById(R.id.btCerrarSession);
         tvCorreo=root.findViewById(R.id.tvCorreoUsuario);
         tvNombreUsuario=root.findViewById(R.id.tvNombreUsuario);
         auth=FirebaseAuth.getInstance();
-        btCerrarSession.setOnClickListener(e->{
-            auth.signOut();
-            startActivity(new Intent(getActivity(), MainActivity.class));
-        });
+
         tvCorreo.setText(auth.getCurrentUser().getEmail());
         tvNombreUsuario.setText(auth.getCurrentUser().getDisplayName());
 
