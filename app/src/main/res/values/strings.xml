@@ -10,5 +10,5 @@
 
     <string name="menu_home">Inicio</string>
     <string name="menu_gallery">Crear nuevo evento</string>
-    <string name="menu_slideshow">¿?</string>
+    <string name="menu_slideshow">Buscar en mi zona</string>
 </resources>
