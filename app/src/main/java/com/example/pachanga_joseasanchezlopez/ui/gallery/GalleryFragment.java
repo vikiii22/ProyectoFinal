@@ -30,7 +30,6 @@ public class GalleryFragment extends Fragment {
     private TextView tvDatos, tvFecha;
     private EditText etNombreGrupo;
     private Button btCrear;
-    private DatePickerDialog.OnDateSetListener setListener;
 
 
     @SuppressLint("SetTextI18n")
@@ -52,19 +51,17 @@ public class GalleryFragment extends Fragment {
         int dia=calendar.get(Calendar.DAY_OF_MONTH);
 
         tvFecha.setOnClickListener(v -> {
-            DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(), R.style.Theme_Pachanga_JoseASanchezLopez, setListener, anyo, mes, dia);
-            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.CYAN));
+            DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    month=mes+1;
+                    String date=day+"/"+month+"/"+year;
+                    tvFecha.setText(date);
+                }
+            }, anyo, mes, dia);
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.LTGRAY));
             datePickerDialog.show();
         });
-
-        setListener=new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month=mes+1;
-                String date=day+"/"+month+"/"+year;
-                tvFecha.setText(date);
-            }
-        };
 
         btCrear.setOnClickListener(v -> {
             tvDatos.setText(etNombreGrupo.getText() + " el día " + tvFecha.getText());
