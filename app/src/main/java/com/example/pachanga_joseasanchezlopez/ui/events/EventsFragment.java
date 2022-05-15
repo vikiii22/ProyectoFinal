@@ -1,10 +1,9 @@
-package com.example.pachanga_joseasanchezlopez.ui.gallery;
+package com.example.pachanga_joseasanchezlopez.ui.events;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,34 +14,35 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pachanga_joseasanchezlopez.R;
 import com.example.pachanga_joseasanchezlopez.databinding.FragmentGalleryBinding;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
-public class GalleryFragment extends Fragment {
+public class EventsFragment extends Fragment {
 
     private FragmentGalleryBinding binding;
     private TextView tvDatos, tvFecha;
-    private EditText etNombreGrupo;
+    private EditText etNombreGrupo, etUbicacion;
     private Button btCrear;
 
 
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        EventsViewModel eventsViewModel =
+                new ViewModelProvider(this).get(EventsViewModel.class);
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         tvDatos=root.findViewById(R.id.tvDatos);
         tvFecha=root.findViewById(R.id.tvFecha);
         etNombreGrupo=root.findViewById(R.id.etNombreGrupo);
+        etUbicacion=root.findViewById(R.id.etUbicacion);
         btCrear=root.findViewById(R.id.btCrear);
 
         Calendar calendar=Calendar.getInstance();
@@ -64,7 +64,10 @@ public class GalleryFragment extends Fragment {
         });
 
         btCrear.setOnClickListener(v -> {
-            tvDatos.setText(etNombreGrupo.getText() + " el día " + tvFecha.getText());
+            tvDatos.setText(etNombreGrupo.getText() + " el día " + tvFecha.getText() + " en " + etUbicacion.getText());
+            NuevoEvento nuevo=new NuevoEvento(tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString());
+            FirebaseFirestore db=FirebaseFirestore.getInstance();
+            db.collection("pachangas").document().set(nuevo);
         });
 
         //final TextView textView = binding.textGallery;

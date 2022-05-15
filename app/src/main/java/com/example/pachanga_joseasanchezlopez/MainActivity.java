@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private final ActivityResultLauncher<Intent> loginLauncher=registerForActivityResult(
+    private final ActivityResultLauncher<Intent> loginLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
             new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
                 @Override
@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
     private void comprobarAutenticacion() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            if (auth.getCurrentUser().getEmail().equals(etEmail.getText().toString())) {
-                finish();
-                startActivity(new Intent(this, InicioActivity.class));
-            }
+//            if (auth.getCurrentUser().getEmail().equals(etEmail.getText().toString())) {
+            finish();
+            startActivity(new Intent(this, InicioActivity.class));
+//            }
         } else {
             Toast.makeText(this, "Usuario no Registrado", Toast.LENGTH_LONG).show();
             createSingInIntent();
