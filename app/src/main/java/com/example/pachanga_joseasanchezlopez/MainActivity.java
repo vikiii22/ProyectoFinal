@@ -2,6 +2,7 @@ package com.example.pachanga_joseasanchezlopez;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,10 +16,15 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApiNotAvailableException;
 import com.google.firebase.auth.ActionCodeSettings;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void comprobarAutenticacion() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        /*FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
 //            if (auth.getCurrentUser().getEmail().equals(etEmail.getText().toString())) {
             finish();
@@ -90,6 +96,20 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Usuario no Registrado", Toast.LENGTH_LONG).show();
             createSingInIntent();
-        }
+        }*/
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signInWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            finish();
+                            startActivity(new Intent(MainActivity.this, InicioActivity.class));
+                        }else{
+                            Toast.makeText(MainActivity.this, "Usuario no Registrado", Toast.LENGTH_LONG).show();
+                            createSingInIntent();
+                        }
+                    }
+                });
     }
 }
