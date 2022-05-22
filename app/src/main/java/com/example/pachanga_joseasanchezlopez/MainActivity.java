@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(
                         etEmail.getText().toString(), etPassword.getText().toString());
             }*/
-            comprobarAutenticacion();
+            createSingInIntent();
         });
 
         /**

@@ -39,23 +39,23 @@ public class EventsFragment extends Fragment {
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        tvDatos=root.findViewById(R.id.tvDatos);
-        tvFecha=root.findViewById(R.id.tvFecha);
-        etNombreGrupo=root.findViewById(R.id.etNombreGrupo);
-        etUbicacion=root.findViewById(R.id.etUbicacion);
-        btCrear=root.findViewById(R.id.btCrear);
+        tvDatos = root.findViewById(R.id.tvDatos);
+        tvFecha = root.findViewById(R.id.tvFecha);
+        etNombreGrupo = root.findViewById(R.id.etNombreGrupo);
+        etUbicacion = root.findViewById(R.id.etUbicacion);
+        btCrear = root.findViewById(R.id.btCrear);
 
-        Calendar calendar=Calendar.getInstance();
-        int anyo=calendar.get(Calendar.YEAR);
-        int mes=calendar.get(Calendar.MONTH);
-        int dia=calendar.get(Calendar.DAY_OF_MONTH);
+        Calendar calendar = Calendar.getInstance();
+        int anyo = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
 
         tvFecha.setOnClickListener(v -> {
-            DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    month=mes+1;
-                    String date=day+"/"+month+"/"+year;
+                    month = mes + 1;
+                    String date = day + "/" + month + "/" + year;
                     tvFecha.setText(date);
                 }
             }, anyo, mes, dia);
@@ -64,10 +64,14 @@ public class EventsFragment extends Fragment {
         });
 
         btCrear.setOnClickListener(v -> {
-            tvDatos.setText(etNombreGrupo.getText() + " el día " + tvFecha.getText() + " en " + etUbicacion.getText());
-            NuevoEvento nuevo=new NuevoEvento(tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString());
-            FirebaseFirestore db=FirebaseFirestore.getInstance();
-            db.collection("pachangas").document().set(nuevo);
+            if (etNombreGrupo.getText().length() == 0 || tvFecha.getText().toString().equals("Seleccionar Fecha") || etUbicacion.getText().length() == 0) {
+                return;
+            } else {
+                tvDatos.setText(etNombreGrupo.getText() + " el día " + tvFecha.getText() + " en " + etUbicacion.getText());
+                NuevoEvento nuevo = new NuevoEvento(tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString());
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("pachangas").document().set(nuevo);
+            }
         });
 
         //final TextView textView = binding.textGallery;
