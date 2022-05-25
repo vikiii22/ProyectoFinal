@@ -95,9 +95,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot t:task.getResult()) {
-                    System.out.println(t.getData());
+                    /*System.out.println(t.getData());
                     //eventos.add(new NuevoEvento(t.getString("fecha"), t.getString("lugar"), t.getString("nombre")));
-                    System.out.println(t.get("fecha") + " " + t.get("lugar") + " " + t.get("nombre"));
+                    System.out.println(t.get("fecha") + " " + t.get("lugar") + " " + t.get("nombre"));*/
                     recogidos.add(new NuevoEvento(""+t.get("fecha"),""+t.get("lugar"), ""+t.get("nombre")));
                 }
             }
