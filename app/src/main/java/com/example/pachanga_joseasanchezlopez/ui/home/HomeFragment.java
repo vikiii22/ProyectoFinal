@@ -82,6 +82,7 @@ public class HomeFragment extends Fragment {
     ArrayList<NuevoEvento> recogidos=new ArrayList<>();
 
     private void llenarLista() {
+        cargarDatos();
         eventos.add(new NuevoEvento("25/09/2022", "Mi casa", "Avengers"));
         eventos.add(new NuevoEvento("01/01/2022", "Mi casa", "Pachangueros"));
         eventos.add(new NuevoEvento("Lunes", "Mi casa", "fdsf"));
@@ -90,6 +91,10 @@ public class HomeFragment extends Fragment {
         for (NuevoEvento n: recogidos) {
             eventos.add(n);
         }
+        recogidos.clear();
+    }
+
+    private void cargarDatos() {
         mDatabase = FirebaseFirestore.getInstance();
         mDatabase.collection("pachangas").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -102,7 +107,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-        recogidos.clear();
     }
 
 

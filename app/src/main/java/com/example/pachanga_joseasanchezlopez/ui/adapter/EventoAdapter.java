@@ -24,7 +24,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
     @NonNull
     @Override
     public EventoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_evento, null, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_evento, null, false);
         return new EventoViewHolder(view);
     }
 
@@ -39,12 +39,13 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
         return eventos.size();
     }
 
-    public static class EventoViewHolder extends RecyclerView.ViewHolder{
+    public static class EventoViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombrePachanga, tvFechaPachanga;
+
         public EventoViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNombrePachanga=(TextView) itemView.findViewById(R.id.tvNombrePachanga);
-            tvFechaPachanga=itemView.findViewById(R.id.tvFechaPachanga);
+            tvNombrePachanga = (TextView) itemView.findViewById(R.id.tvNombrePachanga);
+            tvFechaPachanga = itemView.findViewById(R.id.tvFechaPachanga);
         }
     }
 }
