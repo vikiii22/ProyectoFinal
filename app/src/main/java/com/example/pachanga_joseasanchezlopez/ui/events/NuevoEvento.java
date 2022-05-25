@@ -7,14 +7,15 @@ public class NuevoEvento {
     public String lugar;
     public String nombre;
 
-    public NuevoEvento(){
-
-    }
 
     public NuevoEvento(String fecha, String lugar, String nombre) {
         this.fecha = fecha;
         this.lugar = lugar;
         this.nombre = nombre;
+    }
+
+    public NuevoEvento() {
+
     }
 
     public String getFecha() {
