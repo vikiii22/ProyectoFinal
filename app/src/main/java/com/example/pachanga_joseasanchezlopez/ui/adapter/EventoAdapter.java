@@ -37,6 +37,12 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
         holder.tvFechaPachanga.setText(eventos.get(position).getFecha());
         holder.tvHoraEvento.setText(eventos.get(position).getHora());
 
+        if (!eventos.get(position).getPrivado().equals(true)){
+            holder.tvPrivado.setText("Evento público");
+        }else{
+            holder.tvPrivado.setText("Evento privado");
+        }
+
         holder.cvEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,7 +57,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
     }
 
     public static class EventoViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNombrePachanga, tvFechaPachanga, tvHoraEvento;
+        TextView tvNombrePachanga, tvFechaPachanga, tvHoraEvento, tvPrivado;
         CardView cvEvento;
 
         public EventoViewHolder(@NonNull View itemView) {
@@ -59,6 +65,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
             tvNombrePachanga = (TextView) itemView.findViewById(R.id.tvNombrePachanga);
             tvFechaPachanga = itemView.findViewById(R.id.tvFechaPachanga);
             tvHoraEvento=itemView.findViewById(R.id.tvHoraEvento);
+            tvPrivado=itemView.findViewById(R.id.tvPrivado);
             cvEvento=itemView.findViewById(R.id.cvEvento);
         }
     }

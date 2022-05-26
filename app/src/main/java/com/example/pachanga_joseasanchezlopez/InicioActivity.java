@@ -28,6 +28,7 @@ public class InicioActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityInicioBinding binding;
     private FirebaseAuth auth;
+    private TextView tvNombre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,8 @@ public class InicioActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.inicio, menu);
+        tvNombre=binding.getRoot().findViewById(R.id.tvNombre);
+        tvNombre.setText(auth.getCurrentUser().getDisplayName());
         return true;
     }
 

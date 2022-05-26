@@ -44,7 +44,6 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private FirebaseAuth auth;
-    private TextView tvCorreo, tvNombreUsuario;
     private RecyclerView rvEventos;
     private ArrayList<NuevoEvento> eventos;
     private EventoAdapter adapter;
@@ -63,12 +62,8 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        tvCorreo = root.findViewById(R.id.tvCorreoUsuario);
-        tvNombreUsuario = root.findViewById(R.id.tvNombreUsuario);
         auth = FirebaseAuth.getInstance();
 
-        tvCorreo.setText(auth.getCurrentUser().getEmail());
-        tvNombreUsuario.setText(auth.getCurrentUser().getDisplayName());
 
         eventos = new ArrayList<>();
         rvEventos = root.findViewById(R.id.rvEventos);
@@ -78,19 +73,18 @@ public class HomeFragment extends Fragment {
 
         adapter = new EventoAdapter(eventos);
         rvEventos.setAdapter(adapter);
-        /*final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
+
+        cargarDatos();
         return root;
     }
     ArrayList<NuevoEvento> recogidos=new ArrayList<>();
 
     private void llenarLista() {
-        cargarDatos();
-        eventos.add(new NuevoEvento("25/09/2022", "Mi casa", "Avengers"));
-        eventos.add(new NuevoEvento("01/01/2022", "Mi casa", "Pachangueros"));
-        eventos.add(new NuevoEvento("Lunes", "Mi casa", "fdsf"));
-        eventos.add(new NuevoEvento("Lunes", "Mi casa", "fdsf"));
-        eventos.add(new NuevoEvento("Lunes", "Mi casa", "fdsf"));
+        eventos.add(new NuevoEvento("25/09/2022", "Mi casa", "Avengers", "21:30", true));
+        eventos.add(new NuevoEvento("01/01/2022", "Mi casa", "Pachangueros", "21:30", false));
+        eventos.add(new NuevoEvento("Lunes", "Mi casa", "fdsf", "21:30",true));
+        eventos.add(new NuevoEvento("Lunes", "Mi casa", "fdsf", "21:30",false));
+        eventos.add(new NuevoEvento("Lunes", "Mi casa", "fdsf", "21:30", false));
         for (NuevoEvento n: recogidos) {
             eventos.add(n);
         }
@@ -103,10 +97,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot t:task.getResult()) {
-                    /*System.out.println(t.getData());
-                    //eventos.add(new NuevoEvento(t.getString("fecha"), t.getString("lugar"), t.getString("nombre")));
-                    System.out.println(t.get("fecha") + " " + t.get("lugar") + " " + t.get("nombre"));*/
-                    recogidos.add(new NuevoEvento(""+t.get("fecha"),""+t.get("lugar"), ""+t.get("nombre"), ""+t.get("hora")));
+                    recogidos.add(new NuevoEvento(""+t.get("fecha"),""+t.get("lugar"), ""+t.get("nombre"), ""+t.get("hora"), t.getBoolean("privado")));
                 }
             }
         });

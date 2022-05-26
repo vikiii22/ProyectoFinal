@@ -7,23 +7,26 @@ public class NuevoEvento {
     public String lugar;
     public String nombre;
     public String hora;
+    public Boolean privado;
 
-
-    public NuevoEvento(String fecha, String lugar, String nombre) {
-        this.fecha = fecha;
-        this.lugar = lugar;
-        this.nombre = nombre;
-    }
-
-    public NuevoEvento(String fecha, String lugar, String nombre, String hora) {
+    public NuevoEvento(String fecha, String lugar, String nombre, String hora, Boolean privado) {
         this.fecha = fecha;
         this.lugar = lugar;
         this.nombre = nombre;
         this.hora = hora;
+        this.privado = privado;
     }
 
     public NuevoEvento() {
 
+    }
+
+    public Boolean getPrivado() {
+        return privado;
+    }
+
+    public void setPrivado(Boolean privado) {
+        this.privado = privado;
     }
 
     public String getHora() {

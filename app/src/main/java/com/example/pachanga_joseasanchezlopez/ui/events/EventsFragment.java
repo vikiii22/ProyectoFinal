@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +35,8 @@ public class EventsFragment extends Fragment {
     private TextView tvHora, tvFecha;
     private EditText etNombreGrupo, etUbicacion;
     private Button btCrear;
+    private CheckBox cbPrivado;
+    private Boolean privado=false;
 
 
     @SuppressLint("SetTextI18n")
@@ -48,6 +52,7 @@ public class EventsFragment extends Fragment {
         etNombreGrupo = root.findViewById(R.id.etNombreGrupo);
         etUbicacion = root.findViewById(R.id.etUbicacion);
         btCrear = root.findViewById(R.id.btCrear);
+        cbPrivado=root.findViewById(R.id.cbPrivado);
 
         Calendar calendar = Calendar.getInstance();
         int anyo = calendar.get(Calendar.YEAR);
@@ -82,18 +87,23 @@ public class EventsFragment extends Fragment {
             timePicker.show();
         });
 
+        cbPrivado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                privado=b;
+            }
+        });
+
         btCrear.setOnClickListener(v -> {
             if (etNombreGrupo.getText().length() == 0 || tvFecha.getText().toString().equals("Seleccionar Fecha") || etUbicacion.getText().length() == 0) {
                 return;
             } else {
-                NuevoEvento nuevo = new NuevoEvento(tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString(), tvHora.getText().toString());
+                NuevoEvento nuevo = new NuevoEvento(tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString(), tvHora.getText().toString(), privado);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("pachangas").document().set(nuevo);
             }
         });
 
-        //final TextView textView = binding.textGallery;
-        //galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

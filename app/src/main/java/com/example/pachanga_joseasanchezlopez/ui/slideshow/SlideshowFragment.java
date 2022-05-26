@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pachanga_joseasanchezlopez.databinding.FragmentSlideshowBinding;
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class SlideshowFragment extends Fragment {
 
@@ -24,8 +25,8 @@ public class SlideshowFragment extends Fragment {
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        /*final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
+
+
         return root;
     }
 
