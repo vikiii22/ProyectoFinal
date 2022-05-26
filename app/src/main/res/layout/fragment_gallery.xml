@@ -51,10 +51,14 @@
             android:animationCache="false">
 
             <TextView
-                android:id="@+id/tvDatos"
+                android:id="@+id/tvHora"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:layout_marginEnd="8dp"
+                android:text="Seleccionar Hora"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

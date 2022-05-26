@@ -36,6 +36,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class HomeFragment extends Fragment {
 
@@ -103,7 +106,7 @@ public class HomeFragment extends Fragment {
                     /*System.out.println(t.getData());
                     //eventos.add(new NuevoEvento(t.getString("fecha"), t.getString("lugar"), t.getString("nombre")));
                     System.out.println(t.get("fecha") + " " + t.get("lugar") + " " + t.get("nombre"));*/
-                    recogidos.add(new NuevoEvento(""+t.get("fecha"),""+t.get("lugar"), ""+t.get("nombre")));
+                    recogidos.add(new NuevoEvento(""+t.get("fecha"),""+t.get("lugar"), ""+t.get("nombre"), ""+t.get("hora")));
                 }
             }
         });

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -87,16 +88,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void comprobarAutenticacion() {
-        /*FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
-//            if (auth.getCurrentUser().getEmail().equals(etEmail.getText().toString())) {
-            finish();
-            startActivity(new Intent(this, InicioActivity.class));
-//            }
-        } else {
-            Toast.makeText(this, "Usuario no Registrado", Toast.LENGTH_LONG).show();
-            createSingInIntent();
-        }*/
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signInWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

@@ -6,6 +6,7 @@ public class NuevoEvento {
     public String fecha;
     public String lugar;
     public String nombre;
+    public String hora;
 
 
     public NuevoEvento(String fecha, String lugar, String nombre) {
@@ -14,8 +15,23 @@ public class NuevoEvento {
         this.nombre = nombre;
     }
 
+    public NuevoEvento(String fecha, String lugar, String nombre, String hora) {
+        this.fecha = fecha;
+        this.lugar = lugar;
+        this.nombre = nombre;
+        this.hora = hora;
+    }
+
     public NuevoEvento() {
 
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     public String getFecha() {
