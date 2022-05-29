@@ -8,6 +8,7 @@ public class NuevoEvento {
     public String nombre;
     public String hora;
     public Boolean privado;
+    public String creador;
 
     public NuevoEvento(String fecha, String lugar, String nombre, String hora, Boolean privado) {
         this.fecha = fecha;
@@ -17,8 +18,25 @@ public class NuevoEvento {
         this.privado = privado;
     }
 
+    public NuevoEvento(String fecha, String lugar, String nombre, String hora, Boolean privado, String creador) {
+        this.fecha = fecha;
+        this.lugar = lugar;
+        this.nombre = nombre;
+        this.hora = hora;
+        this.privado = privado;
+        this.creador = creador;
+    }
+
     public NuevoEvento() {
 
+    }
+
+    public String getCreador() {
+        return creador;
+    }
+
+    public void setCreador(String creador) {
+        this.creador = creador;
     }
 
     public Boolean getPrivado() {

@@ -16,12 +16,12 @@
             android:layout_height="136dp"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
-            android:background="#6EF3D8"
-            android:backgroundTint="#6EF3D8"
+            card_view:cardBackgroundColor="#6EF3D8"
             card_view:cardCornerRadius="15dp"
             card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="411dp">
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="409dp"

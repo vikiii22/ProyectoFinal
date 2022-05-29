@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pachanga_joseasanchezlopez.R;
 import com.example.pachanga_joseasanchezlopez.databinding.FragmentGalleryBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -37,6 +38,7 @@ public class EventsFragment extends Fragment {
     private Button btCrear;
     private CheckBox cbPrivado;
     private Boolean privado=false;
+    private FirebaseAuth auth;
 
 
     @SuppressLint("SetTextI18n")
@@ -53,6 +55,7 @@ public class EventsFragment extends Fragment {
         etUbicacion = root.findViewById(R.id.etUbicacion);
         btCrear = root.findViewById(R.id.btCrear);
         cbPrivado=root.findViewById(R.id.cbPrivado);
+        auth=FirebaseAuth.getInstance();
 
         Calendar calendar = Calendar.getInstance();
         int anyo = calendar.get(Calendar.YEAR);
@@ -98,7 +101,9 @@ public class EventsFragment extends Fragment {
             if (etNombreGrupo.getText().length() == 0 || tvFecha.getText().toString().equals("Seleccionar Fecha") || etUbicacion.getText().length() == 0) {
                 return;
             } else {
-                NuevoEvento nuevo = new NuevoEvento(tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString(), tvHora.getText().toString(), privado);
+                String creador=auth.getCurrentUser().getEmail();
+                System.out.println(creador);
+                NuevoEvento nuevo = new NuevoEvento(tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString(), tvHora.getText().toString(), privado, creador);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("pachangas").document().set(nuevo);
             }
