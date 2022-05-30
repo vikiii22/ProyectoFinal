@@ -11,22 +11,6 @@ public class NuevoEvento {
     public Boolean privado;
     public String creador;
 
-    public NuevoEvento(String fecha, String lugar, String nombre, String hora, Boolean privado) {
-        this.fecha = fecha;
-        this.lugar = lugar;
-        this.nombre = nombre;
-        this.hora = hora;
-        this.privado = privado;
-    }
-
-    public NuevoEvento(String fecha, String lugar, String nombre, String hora, Boolean privado, String creador) {
-        this.fecha = fecha;
-        this.lugar = lugar;
-        this.nombre = nombre;
-        this.hora = hora;
-        this.privado = privado;
-        this.creador = creador;
-    }
 
     public NuevoEvento(String id, String fecha, String lugar, String nombre, String hora, Boolean privado, String creador) {
         this.id = id;

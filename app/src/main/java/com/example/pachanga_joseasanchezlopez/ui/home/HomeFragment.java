@@ -1,5 +1,7 @@
 package com.example.pachanga_joseasanchezlopez.ui.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -90,16 +92,26 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                if (eventos.get(viewHolder.getAdapterPosition()).getCreador().equals(auth.getCurrentUser().getEmail())) {
-                    String evento = eventos.get(viewHolder.getAdapterPosition()).getId();
-                    System.out.println(eventos.get(viewHolder.getAdapterPosition()).getNombre());
-                    db.collection("pachangas").document(evento).delete();
-                    eventos.remove(viewHolder.getAdapterPosition());
-                    adapter.notifyDataSetChanged();
-                }else{
-                    return;
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("¿Desea eliminar el evento?");
+                builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        if (eventos.get(viewHolder.getAdapterPosition()).getCreador().equals(auth.getCurrentUser().getEmail())) {
+                            String evento = eventos.get(viewHolder.getAdapterPosition()).getId();
+                            System.out.println(eventos.get(viewHolder.getAdapterPosition()).getNombre());
+                            db.collection("pachangas").document(evento).delete();
+                            eventos.remove(viewHolder.getAdapterPosition());
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            return;
+                        }
+                    }
+                });
+                builder.setNegativeButton("No", null);
+                AlertDialog dialog=builder.create();
+                dialog.show();
             }
         };
 
@@ -112,7 +124,7 @@ public class HomeFragment extends Fragment {
     ArrayList<NuevoEvento> recogidos = new ArrayList<>();
 
     private void llenarLista() {
-        eventos.add(new NuevoEvento("25/09/2022", "Mi casa", "Avengers", "21:30", true, "marina@gmail.com"));
+        eventos.add(new NuevoEvento("1", "25/09/2022", "Mi casa", "Avengers", "21:30", true, "marina@gmail.com"));
         eventos.addAll(recogidos);
         recogidos.clear();
     }
