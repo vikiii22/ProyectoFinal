@@ -1,16 +1,20 @@
 package com.example.pachanga_joseasanchezlopez.ui.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pachanga_joseasanchezlopez.R;
@@ -54,22 +58,45 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
         } else {
             holder.tvPrivado.setText("Evento privado");
         }
+
         auth = FirebaseAuth.getInstance();
         String creador = Objects.requireNonNull(auth.getCurrentUser()).getEmail();
+        int backColor = ContextCompat.getColor(holder.cvEvento.getContext(), R.color.diferenciador);
         if (eventos.get(position).getCreador().equals(creador)) {
-            holder.cvEvento.setCardBackgroundColor(R.color.diferenciador);
+            holder.cvEvento.setCardBackgroundColor(backColor);
         }
 
         holder.cvEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), eventos.get(position).getCreador(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(view.getContext(), MostrarEventoActivity.class);
-                intent.putExtra(NOMBRE_PACHANGA, eventos.get(position).getNombre());
-                intent.putExtra(FECHA_PACHANGA, eventos.get(position).getFecha());
-                intent.putExtra(LUGAR_PACHANGA, eventos.get(position).getLugar());
-                intent.putExtra(HORA_PACHANGA, eventos.get(position).getHora());
-                view.getContext().startActivity(intent);
+                if (eventos.get(position).getPrivado().equals(false) || eventos.get(position).getCreador().equals(creador)) {
+                    Toast.makeText(view.getContext(), eventos.get(position).getCreador(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(view.getContext(), MostrarEventoActivity.class);
+                    intent.putExtra(NOMBRE_PACHANGA, eventos.get(position).getNombre());
+                    intent.putExtra(FECHA_PACHANGA, eventos.get(position).getFecha());
+                    intent.putExtra(LUGAR_PACHANGA, eventos.get(position).getLugar());
+                    intent.putExtra(HORA_PACHANGA, eventos.get(position).getHora());
+                    view.getContext().startActivity(intent);
+                }else{
+                    AlertDialog.Builder builder=new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("¿Quieres pedir permiso para entrar a " + eventos.get(position).getNombre() + "?");
+                    builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(view.getContext(), eventos.get(position).getCreador(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(view.getContext(), MostrarEventoActivity.class);
+                            intent.putExtra(NOMBRE_PACHANGA, eventos.get(position).getNombre());
+                            intent.putExtra(FECHA_PACHANGA, eventos.get(position).getFecha());
+                            intent.putExtra(LUGAR_PACHANGA, eventos.get(position).getLugar());
+                            intent.putExtra(HORA_PACHANGA, eventos.get(position).getHora());
+                            view.getContext().startActivity(intent);
+                        }
+                    });
+                    builder.setNegativeButton("No", null);
+
+                    AlertDialog dialog=builder.create();
+                    dialog.show();
+                }
             }
         });
     }
@@ -81,7 +108,6 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
 
     @SuppressLint("NotifyDataSetChanged")
     public void clear() {
-
         notifyDataSetChanged();
     }
 

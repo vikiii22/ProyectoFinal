@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity {
          * En este botón solamente compruebo si existe un usario o no para que realice el registro
          */
         btRegistrar.setOnClickListener(v -> {
-            /*if (!etEmail.getText().toString().isEmpty() && !etPassword.getText().toString().isEmpty()) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                        etEmail.getText().toString(), etPassword.getText().toString());
-            }*/
             createSingInIntent();
         });
 

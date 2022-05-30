@@ -20,20 +20,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     private FragmentSlideshowBinding binding;
-    private MapView mapView;
-    private GoogleMap map;
-    private Bundle mBundle;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        MapViewModel slideshowViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+        //MapViewModel slideshowViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+        //binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         return root;
     }
@@ -42,5 +40,12 @@ public class MapFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Marker"));
     }
 }
