@@ -3,6 +3,7 @@ package com.example.pachanga_joseasanchezlopez.ui.events;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class NuevoEvento {
+    public String id;
     public String fecha;
     public String lugar;
     public String nombre;
@@ -27,8 +28,26 @@ public class NuevoEvento {
         this.creador = creador;
     }
 
+    public NuevoEvento(String id, String fecha, String lugar, String nombre, String hora, Boolean privado, String creador) {
+        this.id = id;
+        this.fecha = fecha;
+        this.lugar = lugar;
+        this.nombre = nombre;
+        this.hora = hora;
+        this.privado = privado;
+        this.creador = creador;
+    }
+
     public NuevoEvento() {
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCreador() {

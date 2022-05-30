@@ -101,11 +101,12 @@ public class EventsFragment extends Fragment {
             if (etNombreGrupo.getText().length() == 0 || tvFecha.getText().toString().equals("Seleccionar Fecha") || etUbicacion.getText().length() == 0) {
                 return;
             } else {
+                String id= String.valueOf((Math.random()*1000+1));
                 String creador=auth.getCurrentUser().getEmail();
                 System.out.println(creador);
-                NuevoEvento nuevo = new NuevoEvento(tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString(), tvHora.getText().toString(), privado, creador);
+                NuevoEvento nuevo = new NuevoEvento(id, tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString(), tvHora.getText().toString(), privado, creador);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("pachangas").document().set(nuevo);
+                db.collection("pachangas").document(id).set(nuevo);
             }
         });
 

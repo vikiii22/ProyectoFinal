@@ -82,8 +82,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        /**
-         * Swipe para eliminar un evento tendría que pasarle el nombre como ID, de momento no lo veo viable. Puedo dejarlo como mejora
         ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -94,7 +92,7 @@ public class HomeFragment extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 FirebaseFirestore db=FirebaseFirestore.getInstance();
 
-                String evento=eventos.get(viewHolder.getAdapterPosition()).getNombre();
+                String evento=eventos.get(viewHolder.getAdapterPosition()).getId();
                 System.out.println(eventos.get(viewHolder.getAdapterPosition()).getNombre());
                 db.collection("pachangas").document(evento).delete();
                 eventos.remove(viewHolder.getAdapterPosition());
@@ -103,7 +101,7 @@ public class HomeFragment extends Fragment {
         };
 
         ItemTouchHelper itemTouchHelper=new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(rvEventos);*/
+        itemTouchHelper.attachToRecyclerView(rvEventos);
 
         return root;
     }
@@ -121,7 +119,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot t:task.getResult()) {
-                    recogidos.add(new NuevoEvento(""+t.get("fecha"),""+t.get("lugar"), ""+t.get("nombre"), ""+t.get("hora"), t.getBoolean("privado"), ""+t.get("creador")));
+                    recogidos.add(new NuevoEvento(""+t.get("id"),""+t.get("fecha"),""+t.get("lugar"), ""+t.get("nombre"), ""+t.get("hora"), t.getBoolean("privado"), ""+t.get("creador")));
                 }
             }
         });
