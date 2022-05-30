@@ -1,7 +1,9 @@
 package com.example.pachanga_joseasanchezlopez.ui.home;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -22,6 +25,7 @@ import com.example.pachanga_joseasanchezlopez.ui.events.NuevoEvento;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -77,6 +81,30 @@ public class HomeFragment extends Fragment {
                 new CargaDesdeBD().execute();
             }
         });
+
+        /**
+         * Swipe para eliminar un evento tendría que pasarle el nombre como ID, de momento no lo veo viable. Puedo dejarlo como mejora
+        ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                FirebaseFirestore db=FirebaseFirestore.getInstance();
+
+                String evento=eventos.get(viewHolder.getAdapterPosition()).getNombre();
+                System.out.println(eventos.get(viewHolder.getAdapterPosition()).getNombre());
+                db.collection("pachangas").document(evento).delete();
+                eventos.remove(viewHolder.getAdapterPosition());
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper=new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(rvEventos);*/
+
         return root;
     }
     ArrayList<NuevoEvento> recogidos=new ArrayList<>();
