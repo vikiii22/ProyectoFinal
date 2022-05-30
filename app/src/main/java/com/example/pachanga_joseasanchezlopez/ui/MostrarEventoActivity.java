@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class MostrarEventoActivity extends AppCompatActivity {
 
-    private TextView tvNombreEvento, tvUbicacionEvento;
+    private TextView tvNombreEvento, tvUbicacionEvento, tvNumJugadores;
     private Button btSalir, btAgregar;
     private ListView lvJugadores;
     private ArrayList<String> jugadores;
@@ -30,21 +30,23 @@ public class MostrarEventoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_evento);
 
-        auth=FirebaseAuth.getInstance();
-        tvNombreEvento=findViewById(R.id.tvNombreEventoVisualizar);
-        tvUbicacionEvento=findViewById(R.id.tvUbicacionEvento);
-        btSalir=findViewById(R.id.btSalir);
-        btAgregar=findViewById(R.id.btAgregar);
-        lvJugadores=findViewById(R.id.lvJugadores);
-        jugadores=new ArrayList<>();
-        adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, jugadores);
+        auth = FirebaseAuth.getInstance();
+        tvNombreEvento = findViewById(R.id.tvNombreEventoVisualizar);
+        tvUbicacionEvento = findViewById(R.id.tvUbicacionEvento);
+        tvNumJugadores = findViewById(R.id.tvNumJugadores);
+        btSalir = findViewById(R.id.btSalir);
+        btAgregar = findViewById(R.id.btAgregar);
+        lvJugadores = findViewById(R.id.lvJugadores);
+        jugadores = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, jugadores);
         lvJugadores.setAdapter(adapter);
 
         tvNombreEvento.setText(getIntent().getExtras().getString(EventoAdapter.NOMBRE_PACHANGA));
         tvUbicacionEvento.setText(getIntent().getExtras().getString(EventoAdapter.LUGAR_PACHANGA));
+        tvNumJugadores.setText("0/10");
 
         tvUbicacionEvento.setOnClickListener(v -> {
-            Uri intentUri = Uri.parse("geo:0,0?q="+Uri.encode(tvUbicacionEvento.getText().toString()));
+            Uri intentUri = Uri.parse("geo:0,0?q=" + Uri.encode(tvUbicacionEvento.getText().toString()));
             Intent intent = new Intent(Intent.ACTION_VIEW, intentUri);
             startActivity(intent);
         });
@@ -54,11 +56,13 @@ public class MostrarEventoActivity extends AppCompatActivity {
         });
 
         btAgregar.setOnClickListener(v -> {
-            if (jugadores.size()<=10){
+            int limit=10;
+            if (jugadores.size() < limit) {
+                tvNumJugadores.setText(jugadores.size()+1+ "/" + limit);
                 /*if (!jugadores.contains(auth.getCurrentUser().getEmail()))*/
                 jugadores.add(auth.getCurrentUser().getEmail());
                 adapter.notifyDataSetChanged();
-            }else{
+            } else {
                 return;
             }
         });
