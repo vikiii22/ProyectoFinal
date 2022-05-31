@@ -1,10 +1,14 @@
 package com.example.pachanga_joseasanchezlopez.ui;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -34,8 +38,8 @@ public class MostrarEventoActivity extends AppCompatActivity {
         tvNombreEvento = findViewById(R.id.tvNombreEventoVisualizar);
         tvUbicacionEvento = findViewById(R.id.tvUbicacionEvento);
         tvNumJugadores = findViewById(R.id.tvNumJugadores);
-        tvFechaEvento=findViewById(R.id.tvFechaEventoVisualizar);
-        tvHoraEvento=findViewById(R.id.tvHoraEventoVisualizar);
+        tvFechaEvento = findViewById(R.id.tvFechaEventoVisualizar);
+        tvHoraEvento = findViewById(R.id.tvHoraEventoVisualizar);
         btSalir = findViewById(R.id.btSalir);
         btAgregar = findViewById(R.id.btAgregar);
         lvJugadores = findViewById(R.id.lvJugadores);
@@ -43,7 +47,7 @@ public class MostrarEventoActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, jugadores);
         lvJugadores.setAdapter(adapter);
 
-        int limit=getIntent().getIntExtra(EventoAdapter.LIMITE_JUGADORES, 0);
+        int limit = getIntent().getIntExtra(EventoAdapter.LIMITE_JUGADORES, 0);
         tvNombreEvento.setText(getIntent().getExtras().getString(EventoAdapter.NOMBRE_PACHANGA));
         tvUbicacionEvento.setText(getIntent().getExtras().getString(EventoAdapter.LUGAR_PACHANGA));
         tvFechaEvento.setText(getIntent().getExtras().getString(EventoAdapter.FECHA_PACHANGA));
@@ -62,12 +66,33 @@ public class MostrarEventoActivity extends AppCompatActivity {
 
         btAgregar.setOnClickListener(v -> {
             if (jugadores.size() < limit) {
-                tvNumJugadores.setText(jugadores.size()+1+ "/" + limit);
+                tvNumJugadores.setText(jugadores.size() + 1 + "/" + limit);
                 /*if (!jugadores.contains(auth.getCurrentUser().getEmail()))*/
                 jugadores.add(auth.getCurrentUser().getEmail());
                 adapter.notifyDataSetChanged();
             } else {
                 return;
+            }
+        });
+
+        lvJugadores.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Desea eliminar al jugador " + (position + 1));
+                builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        tvNumJugadores.setText(jugadores.size() - 1 + "/" + limit);
+                        jugadores.remove(position);
+                        System.out.println("eliminado " + position + 1);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("No", null);
+
+                AlertDialog dialog=builder.create();
+                dialog.show();
             }
         });
     }
