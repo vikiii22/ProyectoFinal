@@ -38,7 +38,7 @@ public class EventsFragment extends Fragment {
     private EditText etNombreGrupo, etUbicacion, etLimite;
     private Button btCrear;
     private CheckBox cbPrivado;
-    private Boolean privado=false;
+    private Boolean privado = false;
     private FirebaseAuth auth;
 
 
@@ -54,10 +54,10 @@ public class EventsFragment extends Fragment {
         tvFecha = root.findViewById(R.id.tvFecha);
         etNombreGrupo = root.findViewById(R.id.etNombreGrupo);
         etUbicacion = root.findViewById(R.id.etUbicacion);
-        etLimite=root.findViewById(R.id.etLimite);
+        etLimite = root.findViewById(R.id.etLimite);
         btCrear = root.findViewById(R.id.btCrear);
-        cbPrivado=root.findViewById(R.id.cbPrivado);
-        auth=FirebaseAuth.getInstance();
+        cbPrivado = root.findViewById(R.id.cbPrivado);
+        auth = FirebaseAuth.getInstance();
 
         Calendar calendar = Calendar.getInstance();
         int anyo = calendar.get(Calendar.YEAR);
@@ -78,11 +78,11 @@ public class EventsFragment extends Fragment {
         });
 
         tvHora.setOnClickListener(v -> {
-            Calendar c=Calendar.getInstance();
-            int hora=c.get(Calendar.HOUR_OF_DAY);
-            int minuto=c.get(Calendar.MINUTE);
+            Calendar c = Calendar.getInstance();
+            int hora = c.get(Calendar.HOUR_OF_DAY);
+            int minuto = c.get(Calendar.MINUTE);
             TimePickerDialog timePicker;
-            timePicker=new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int i, int i1) {
                     tvHora.setText(i + ":" + i1);
@@ -95,17 +95,17 @@ public class EventsFragment extends Fragment {
         cbPrivado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                privado=b;
+                privado = b;
             }
         });
 
         btCrear.setOnClickListener(v -> {
-            if (etNombreGrupo.getText().length() == 0 || tvFecha.getText().toString().equals("Seleccionar Fecha") || etUbicacion.getText().length() == 0) {
+            if (etNombreGrupo.getText().length() == 0 || tvFecha.getText().toString().equals("Seleccionar Fecha") || etUbicacion.getText().length() == 0 || etLimite.getText().length() == 0) {
                 return;
             } else {
-                String id= String.valueOf((Math.random()*1000+1));
-                String creador=auth.getCurrentUser().getEmail();
-                int limite=Integer.parseInt(etLimite.getText().toString());
+                String id = String.valueOf((Math.random() * 1000 + 1));
+                String creador = auth.getCurrentUser().getEmail();
+                int limite = Integer.parseInt(etLimite.getText().toString());
 
                 NuevoEvento nuevo = new NuevoEvento(id, tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString(), tvHora.getText().toString(), privado, creador, limite);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();

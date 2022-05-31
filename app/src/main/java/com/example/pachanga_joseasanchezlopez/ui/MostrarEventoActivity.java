@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class MostrarEventoActivity extends AppCompatActivity {
 
-    private TextView tvNombreEvento, tvUbicacionEvento, tvNumJugadores;
+    private TextView tvNombreEvento, tvUbicacionEvento, tvNumJugadores, tvFechaEvento, tvHoraEvento;
     private Button btSalir, btAgregar;
     private ListView lvJugadores;
     private ArrayList<String> jugadores;
@@ -34,6 +34,8 @@ public class MostrarEventoActivity extends AppCompatActivity {
         tvNombreEvento = findViewById(R.id.tvNombreEventoVisualizar);
         tvUbicacionEvento = findViewById(R.id.tvUbicacionEvento);
         tvNumJugadores = findViewById(R.id.tvNumJugadores);
+        tvFechaEvento=findViewById(R.id.tvFechaEventoVisualizar);
+        tvHoraEvento=findViewById(R.id.tvHoraEventoVisualizar);
         btSalir = findViewById(R.id.btSalir);
         btAgregar = findViewById(R.id.btAgregar);
         lvJugadores = findViewById(R.id.lvJugadores);
@@ -44,6 +46,8 @@ public class MostrarEventoActivity extends AppCompatActivity {
         int limit=getIntent().getIntExtra(EventoAdapter.LIMITE_JUGADORES, 0);
         tvNombreEvento.setText(getIntent().getExtras().getString(EventoAdapter.NOMBRE_PACHANGA));
         tvUbicacionEvento.setText(getIntent().getExtras().getString(EventoAdapter.LUGAR_PACHANGA));
+        tvFechaEvento.setText(getIntent().getExtras().getString(EventoAdapter.FECHA_PACHANGA));
+        tvHoraEvento.setText(getIntent().getExtras().getString(EventoAdapter.HORA_PACHANGA));
         tvNumJugadores.setText("0/" + limit);
 
         tvUbicacionEvento.setOnClickListener(v -> {
