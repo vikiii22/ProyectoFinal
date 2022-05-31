@@ -41,9 +41,10 @@ public class MostrarEventoActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, jugadores);
         lvJugadores.setAdapter(adapter);
 
+        int limit=getIntent().getIntExtra(EventoAdapter.LIMITE_JUGADORES, 0);
         tvNombreEvento.setText(getIntent().getExtras().getString(EventoAdapter.NOMBRE_PACHANGA));
         tvUbicacionEvento.setText(getIntent().getExtras().getString(EventoAdapter.LUGAR_PACHANGA));
-        tvNumJugadores.setText("0/10");
+        tvNumJugadores.setText("0/" + limit);
 
         tvUbicacionEvento.setOnClickListener(v -> {
             Uri intentUri = Uri.parse("geo:0,0?q=" + Uri.encode(tvUbicacionEvento.getText().toString()));
@@ -56,7 +57,6 @@ public class MostrarEventoActivity extends AppCompatActivity {
         });
 
         btAgregar.setOnClickListener(v -> {
-            int limit=10;
             if (jugadores.size() < limit) {
                 tvNumJugadores.setText(jugadores.size()+1+ "/" + limit);
                 /*if (!jugadores.contains(auth.getCurrentUser().getEmail()))*/

@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -34,7 +35,7 @@ public class EventsFragment extends Fragment {
 
     private FragmentGalleryBinding binding;
     private TextView tvHora, tvFecha;
-    private EditText etNombreGrupo, etUbicacion;
+    private EditText etNombreGrupo, etUbicacion, etLimite;
     private Button btCrear;
     private CheckBox cbPrivado;
     private Boolean privado=false;
@@ -53,6 +54,7 @@ public class EventsFragment extends Fragment {
         tvFecha = root.findViewById(R.id.tvFecha);
         etNombreGrupo = root.findViewById(R.id.etNombreGrupo);
         etUbicacion = root.findViewById(R.id.etUbicacion);
+        etLimite=root.findViewById(R.id.etLimite);
         btCrear = root.findViewById(R.id.btCrear);
         cbPrivado=root.findViewById(R.id.cbPrivado);
         auth=FirebaseAuth.getInstance();
@@ -103,10 +105,14 @@ public class EventsFragment extends Fragment {
             } else {
                 String id= String.valueOf((Math.random()*1000+1));
                 String creador=auth.getCurrentUser().getEmail();
-                System.out.println(creador);
-                NuevoEvento nuevo = new NuevoEvento(id, tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString(), tvHora.getText().toString(), privado, creador);
+                int limite=Integer.parseInt(etLimite.getText().toString());
+
+                NuevoEvento nuevo = new NuevoEvento(id, tvFecha.getText().toString(), etUbicacion.getText().toString(), etNombreGrupo.getText().toString(), tvHora.getText().toString(), privado, creador, limite);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("pachangas").document(id).set(nuevo);
+                etNombreGrupo.setText("");
+                etUbicacion.setText("");
+                Toast.makeText(getContext(), "Pachanga creada con éxito", Toast.LENGTH_LONG).show();
             }
         });
 

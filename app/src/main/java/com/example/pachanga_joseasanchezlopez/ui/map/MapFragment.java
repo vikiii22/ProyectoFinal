@@ -26,8 +26,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //MapViewModel slideshowViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-        //binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);

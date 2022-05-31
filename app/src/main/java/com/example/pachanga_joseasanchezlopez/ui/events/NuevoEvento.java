@@ -10,9 +10,10 @@ public class NuevoEvento {
     public String hora;
     public Boolean privado;
     public String creador;
+    public int limite;
 
 
-    public NuevoEvento(String id, String fecha, String lugar, String nombre, String hora, Boolean privado, String creador) {
+    public NuevoEvento(String id, String fecha, String lugar, String nombre, String hora, Boolean privado, String creador, int limite) {
         this.id = id;
         this.fecha = fecha;
         this.lugar = lugar;
@@ -20,10 +21,19 @@ public class NuevoEvento {
         this.hora = hora;
         this.privado = privado;
         this.creador = creador;
+        this.limite = limite;
     }
 
     public NuevoEvento() {
 
+    }
+
+    public int getLimite() {
+        return limite;
+    }
+
+    public void setLimite(int limite) {
+        this.limite = limite;
     }
 
     public String getId() {

@@ -33,6 +33,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
     public static final String FECHA_PACHANGA = "fechaPachanga";
     public static final String LUGAR_PACHANGA = "lugarPachanga";
     public static final String HORA_PACHANGA = "horaPachanga";
+    public static final String LIMITE_JUGADORES = "0";
     private FirebaseAuth auth;
 
     ArrayList<NuevoEvento> eventos;
@@ -78,6 +79,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
                     intent.putExtra(FECHA_PACHANGA, eventos.get(position).getFecha());
                     intent.putExtra(LUGAR_PACHANGA, eventos.get(position).getLugar());
                     intent.putExtra(HORA_PACHANGA, eventos.get(position).getHora());
+                    intent.putExtra(LIMITE_JUGADORES, eventos.get(position).getLimite());
                     view.getContext().startActivity(intent);
                 }else{
                     AlertDialog.Builder builder=new AlertDialog.Builder(view.getContext());
@@ -91,6 +93,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
                             intent.putExtra(FECHA_PACHANGA, eventos.get(position).getFecha());
                             intent.putExtra(LUGAR_PACHANGA, eventos.get(position).getLugar());
                             intent.putExtra(HORA_PACHANGA, eventos.get(position).getHora());
+                            intent.putExtra(LIMITE_JUGADORES, eventos.get(position).getLimite());
                             view.getContext().startActivity(intent);
                         }
                     });

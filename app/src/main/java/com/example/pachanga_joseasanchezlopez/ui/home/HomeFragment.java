@@ -124,7 +124,7 @@ public class HomeFragment extends Fragment {
     ArrayList<NuevoEvento> recogidos = new ArrayList<>();
 
     private void llenarLista() {
-        eventos.add(new NuevoEvento("1", "25/09/2022", "Mi casa", "Avengers", "21:30", true, "marina@gmail.com"));
+        eventos.add(new NuevoEvento("1", "25/09/2022", "Mi casa", "Avengers", "21:30", true, "marina@gmail.com", 10));
         eventos.addAll(recogidos);
         recogidos.clear();
     }
@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (QueryDocumentSnapshot t : task.getResult()) {
-                    recogidos.add(new NuevoEvento("" + t.get("id"), "" + t.get("fecha"), "" + t.get("lugar"), "" + t.get("nombre"), "" + t.get("hora"), t.getBoolean("privado"), "" + t.get("creador")));
+                    recogidos.add(new NuevoEvento("" + t.get("id"), "" + t.get("fecha"), "" + t.get("lugar"), "" + t.get("nombre"), "" + t.get("hora"), t.getBoolean("privado"), "" + t.get("creador"), Integer.parseInt(String.valueOf(t.get("limite")))));
                 }
             }
         });
