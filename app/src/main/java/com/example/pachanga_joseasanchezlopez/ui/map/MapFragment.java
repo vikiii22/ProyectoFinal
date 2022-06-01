@@ -6,19 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pachanga_joseasanchezlopez.R;
 import com.example.pachanga_joseasanchezlopez.databinding.FragmentSlideshowBinding;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback{
 
@@ -44,7 +45,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(38.342729, -0.769477))
+                .position(new LatLng(38.343743, -0.765182))
                 .title("Marker"));
     }
 }

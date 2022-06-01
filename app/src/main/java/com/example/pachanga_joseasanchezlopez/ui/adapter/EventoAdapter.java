@@ -73,7 +73,6 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
             @Override
             public void onClick(View view) {
                 if (eventos.get(position).getPrivado().equals(false) || eventos.get(position).getCreador().equals(creador)) {
-                    Toast.makeText(view.getContext(), eventos.get(position).getCreador(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(view.getContext(), MostrarEventoActivity.class);
                     intent.putExtra(NOMBRE_PACHANGA, eventos.get(position).getNombre());
                     intent.putExtra(FECHA_PACHANGA, eventos.get(position).getFecha());
@@ -87,7 +86,6 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
                     builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(view.getContext(), eventos.get(position).getCreador(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(view.getContext(), MostrarEventoActivity.class);
                             intent.putExtra(NOMBRE_PACHANGA, eventos.get(position).getNombre());
                             intent.putExtra(FECHA_PACHANGA, eventos.get(position).getFecha());
